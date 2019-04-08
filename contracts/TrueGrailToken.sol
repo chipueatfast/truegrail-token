@@ -18,6 +18,11 @@ contract TrueGrailToken {
 
     address[] public factories;
 
+    // getter
+    function getFactories() public view returns (address[] memory) {
+        return factories;
+    }
+
     // modifier
 
     modifier onlyByUser(address _account) {
