@@ -11,7 +11,6 @@ contract TrueGrailToken {
     // key: token id, value: address of the owner
     mapping(uint256 => address) public ownerships;
     // key: token id, value: group of adresses that are allowed to use the token 
-    mapping(uint256 => address[]) public alloweds;
 
     mapping (uint256 => string) public tokenHashInfo;
     // mapping(address => uint256) balances;
@@ -55,7 +54,6 @@ contract TrueGrailToken {
     function issueToken(uint256 _tokenId, string memory _hashInfo) public onlyByGroup(factories) {
         tokenHashInfo[_tokenId] = _hashInfo;
         ownerships[_tokenId] = msg.sender;
-        alloweds[_tokenId].push(msg.sender);
 
         emit Issue(msg.sender, _tokenId, _hashInfo);
     }
@@ -69,11 +67,11 @@ contract TrueGrailToken {
         return ownerships[_tokenId];
     }
 
-    function approve(address _to, uint256 _tokenId) public onlyByUser(ownerships[_tokenId]) {
-        alloweds[_tokenId].push(_to);
-    }
+    // function approve(address _to, uint256 _tokenId) public onlyByUser(ownerships[_tokenId]) {
+    //     alloweds[_tokenId].push(_to);
+    // }
 
-    function transfer(address _to, uint256 _tokenId) public onlyByGroup(alloweds[_tokenId]) {
+    function transfer(address _to, uint256 _tokenId) public onlyByUser(ownerships[_tokenId]) {
         ownerships[_tokenId] = _to;
         emit Transfer(msg.sender, _to, _tokenId);
     }
@@ -84,8 +82,8 @@ contract TrueGrailToken {
         return tokenHashInfo[_tokenId];
     }
     // Events
-    event Transfer(address indexed _from, address indexed _to, uint256 _tokenId);
+    event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
     event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);
-    event Issue(address indexed _issuer, uint256 _tokenId, string _hashInfo);
+    event Issue(address indexed _issuer, uint256 indexed _tokenId, string _hashInfo);
     
 }
