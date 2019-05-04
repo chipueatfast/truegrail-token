@@ -71,9 +71,10 @@ contract TrueGrailToken {
     //     alloweds[_tokenId].push(_to);
     // }
 
-    function transfer(address _to, uint256 _tokenId) public onlyByUser(ownerships[_tokenId]) {
+    function transfer(address _to, uint256 _tokenId, string memory newHash) public onlyByUser(ownerships[_tokenId]) {
         ownerships[_tokenId] = _to;
-        emit Transfer(msg.sender, _to, _tokenId);
+        tokenHashInfo[_tokenId] = newHash;
+        emit Transfer(msg.sender, _to, _tokenId, newHash);
     }
 
     // function tokenOfOwnerByIndex(address _owner, uint256 _index) public view returns (uint tokenId);
@@ -82,7 +83,7 @@ contract TrueGrailToken {
         return tokenHashInfo[_tokenId];
     }
     // Events
-    event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+    event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId, string newHash);
     event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);
     event Issue(address indexed _issuer, uint256 indexed _tokenId, string _hashInfo);
     
