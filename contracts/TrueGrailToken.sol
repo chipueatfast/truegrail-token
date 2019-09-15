@@ -17,6 +17,10 @@ contract TrueGrailToken {
 
     address[] public factories;
 
+    function getCreator() public view returns (address) {
+        return creator;
+    }
+
     // getter
     function getFactories() public view returns (address[] memory) {
         return factories;
@@ -86,5 +90,4 @@ contract TrueGrailToken {
     event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId, string newHash);
     event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);
     event Issue(address indexed _issuer, uint256 indexed _tokenId, string _hashInfo);
-    
 }
