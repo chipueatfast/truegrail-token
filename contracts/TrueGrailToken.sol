@@ -55,9 +55,9 @@ contract TrueGrailToken {
         factories.push(_account);
     }
 
-    function issueToken(uint256 _tokenId, string memory _hashInfo, address _initAddress) public onlyByGroup(factories) {
+    function issueToken(uint256 _tokenId, string memory _hashInfo) public onlyByGroup(factories) {
         tokenHashInfo[_tokenId] = _hashInfo;
-        ownerships[_tokenId] = _initAddress;
+        ownerships[_tokenId] = msg.sender;
 
         emit Issue(msg.sender, _tokenId, _hashInfo);
     }
